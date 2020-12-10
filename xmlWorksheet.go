@@ -648,8 +648,10 @@ func (worksheet *xlsxWorksheet) makeXlsxRowFromRow(row *Row, styles *xlsxStyleSh
 	xRow := &xlsxRow{}
 	xRow.R = row.num + 1
 	if row.isCustom {
-		xRow.CustomHeight = true
-		xRow.Ht = fmt.Sprintf("%g", row.GetHeight())
+		if h := row.GetHeight(); h > 0 {
+			xRow.CustomHeight = true
+			xRow.Ht = fmt.Sprintf("%g", h)
+		}
 	}
 	xRow.OutlineLevel = row.GetOutlineLevel()
 
